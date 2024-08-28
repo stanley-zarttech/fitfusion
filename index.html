@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fit Fusion</title>
     <link rel="stylesheet" href="css/index.css">
+
 </head>
 
 <body>
@@ -75,6 +76,18 @@
             </div>
         </div>
     </div>
+    <script>
+        (() => console.log('nameless function'))();
+        const joinBtn = document.getElementById('join-btn');
+        console.log('joinbtn: ', joinBtn)
+        const handleJoinBtn = (evt) => {
+            console.log('Event: ', evt)
+        }
+        joinBtn.addEventListener('click', handleJoinBtn)
+
+
+
+    </script>
 </body>
 
 </html>
