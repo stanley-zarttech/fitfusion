@@ -171,7 +171,7 @@
                     <button type="button" class="cart-btn" id="addToCart">Add to Cart</button>
                     <button type="button" class="cart-btn" id="removeFromCart">Remove from Cart</button>
                     <br><br>
-                    <a href="">View cart</a>
+                    <a href="cart.html">View cart</a>
                 </form>
                 </div>
                 <br><br>
@@ -189,127 +189,117 @@
     </div>
 
     <script>
-        // Displays the custom measurement when selected        
-         document.getElementById('measurements').addEventListener('change', function() {
-            var customMeasurements = document.getElementById('custom-measurements');
-            if (this.value === 'custom') {
-                customMeasurements.style.display = 'block';
-            } else {
-                customMeasurements.style.display = 'none';
-            }
-        });
-
-        // Accumulate the total price
-        const checkboxes = document.querySelectorAll('.catalog-item input[type="checkbox"]');
-        const totalPriceElement = document.getElementById('totalPrice');
-
-        function updateTotalPrice() {
-            let totalPrice = 0;
-
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    totalPrice += parseInt(checkbox.dataset.price);
-                }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display custom measurement fields when 'custom' is selected
+            document.getElementById('measurements').addEventListener('change', function() {
+                const customMeasurements = document.getElementById('custom-measurements');
+                customMeasurements.style.display = this.value === 'custom' ? 'block' : 'none';
             });
 
-            totalPriceElement.textContent = totalPrice;
-        }
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateTotalPrice);
-        });
-
-        //Product class
-        class Product {
-            constructor(vendorId, products, weight, size, measurement, price) {
-                this.vendorId = vendorId;
-                this.products = products;
-                this.weight = weight;
-                this.size = size;
-                this.measurement = measurement;
-                this.price = price;
-            }
-
-            create() {
-                console.log(`Product created: 
-                    Vendor ID: ${this.vendorId},
-                    Products: ${this.products},
-                    Weight: ${this.weight},
-                    Size: ${this.size},
-                    Measurement: ${this.measurement},
-                    Price: $${this.price}`);
-            }
-
-            update(updatedProduct) {
-                Object.assign(this, updatedProduct);
-                console.log(`Product updated: 
-                    Vendor ID: ${this.vendorId},
-                    Products: ${this.products},
-                    Weight: ${this.weight},
-                    Size: ${this.size},
-                    Measurement: ${this.measurement},
-                    Price: $${this.price}`);
-            }
-
-            logAction(action) {
-                console.log(`${action} action performed on product:
-                Name: ${this.products.join(', ')},
-                Vendor ID: ${this.vendorId},
-                Weight: ${this.weight},
-                Size: ${this.size},
-                Measurement: ${this.measurement},
-                Price: $${this.price}`);
-            }
-        }
-
-        // Function to retrieve current product details
-        function getCurrentProductDetails() {
-            
-            const vendorId = "3874FF";
-            const products = Array.from(document.querySelectorAll('.catalog-item input[type="checkbox"]:checked'))
-                                    .map(checkbox => checkbox.value);
-            const weight = document.querySelector('#weight').value;
-            const size = document.querySelector('#size').value;
-            const measurement = document.querySelector('#measurements').value;
-            const price = parseFloat(document.getElementById('totalPrice').textContent);
-
-            return { vendorId, products, weight, size, measurement, price };
-        }
-
-        // Initial product instance
-        let product = new Product("3874FF", ["Design1", "Design2", "Design3"], "85-95kg", "M", "Custom Measurements", 75);
-        product.create();
-
-        // Update product details dynamically when buttons are clicked
-        document.querySelectorAll('.cart-btn').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                
-                const currentDetails = getCurrentProductDetails();
-                
-                product.update(currentDetails);
-
-                const action = button.textContent.includes('Add') ? 'Add to Cart' : 'Remove from Cart';
-
-                product.logAction(action);
-            });
-        });
-
-        // Clears the form and catalog after added to cart or removed 
-        document.getElementById('addToCart').addEventListener('click', function() {
-                document.querySelectorAll('#catalog input[type="checkbox"]').forEach(checkbox => {
-                    checkbox.checked = false;
+            // Update total price based on selected checkboxes
+            function updateTotalPrice() {
+                const totalPriceElement = document.getElementById('totalPrice');
+                const checkboxes = document.querySelectorAll('.catalog-item input[type="checkbox"]');
+                let totalPrice = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        totalPrice += parseFloat(checkbox.dataset.price);
+                    }
                 });
-                document.getElementById('orderForm').reset();
-                document.getElementById('custom-measurements').style.display = 'none';
-                document.getElementById('totalPrice').textContent = '0';
+                totalPriceElement.textContent = totalPrice.toFixed(2);
+            }
+
+            // Attach event listeners to checkboxes
+            document.querySelectorAll('.catalog-item input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateTotalPrice);
             });
 
-            document.getElementById('removeFromCart').addEventListener('click', function() {
-                // Implement logic for "Remove from Cart" if required
-                console.log('Removed from Cart');
-            });
+            // Product class for handling product details
+            class Product {
+                constructor(vendorId, products, weight, size, measurement, price) {
+                    this.vendorId = vendorId;
+                    this.products = products;
+                    this.weight = weight;
+                    this.size = size;
+                    this.measurement = measurement;
+                    this.price = price;
+                }
 
+                create() {
+                    console.log(`Product created: Vendor ID: ${this.vendorId}, Products: ${this.products.join(', ')}, Weight: ${this.weight}, Size: ${this.size}, Measurement: ${this.measurement}, Price: $${this.price}`);
+                }
+
+                update(updatedProduct) {
+                    Object.assign(this, updatedProduct);
+                    console.log(`Product updated: Vendor ID: ${this.vendorId}, Products: ${this.products.join(', ')}, Weight: ${this.weight}, Size: ${this.size}, Measurement: ${this.measurement}, Price: $${this.price}`);
+                }
+
+                logAction(action) {
+                    console.log(`${action} action performed on product: Vendor ID: ${this.vendorId}, Products: ${this.products.join(', ')}, Weight: ${this.weight}, Size: ${this.size}, Measurement: ${this.measurement}, Price: $${this.price}`);
+                }
+            }
+
+            // Retrieve current product details
+            function getCurrentProductDetails() {
+                const vendorId = "3874FF";
+                const products = Array.from(document.querySelectorAll('.catalog-item input[type="checkbox"]:checked'))
+                                        .map(checkbox => checkbox.nextElementSibling.textContent.trim());
+                const weight = document.querySelector('#weight').value;
+                const size = document.querySelector('#size').value;
+                const measurement = document.querySelector('#measurements').value;
+                const price = parseFloat(document.getElementById('totalPrice').textContent);
+
+                return { vendorId, products, weight, size, measurement, price };
+            }
+
+            // Initial product instance
+            let product = new Product("3874FF", [], "", "", "", 0);
+            product.create();
+
+            // Update product details when buttons are clicked
+            document.querySelectorAll('.cart-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    const currentDetails = getCurrentProductDetails();
+                    product.update(currentDetails);
+
+                    const action = button.id === 'addToCart' ? 'Add to Cart' : 'Remove from Cart';
+                    product.logAction(action);
+
+                    if (button.id === 'addToCart') {
+                        const cartItems = Array.from(document.querySelectorAll('.catalog-item input[type="checkbox"]:checked')).map(checkbox => {
+                            return {
+                                name: checkbox.nextElementSibling.textContent.trim(),
+                                design: checkbox.value,
+                                price: parseFloat(checkbox.dataset.price),
+                                weight: currentDetails.weight,
+                                size: currentDetails.size,
+                                timestamp: new Date().toLocaleString()
+                            };
+                        });
+
+                        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                        cartItems.forEach(item => cart.push(item));
+                        localStorage.setItem('cart', JSON.stringify(cart));
+
+                        alert('Item(s) added to cart!');
+                    } else {
+                        console.log('Removed from Cart');
+                    }
+
+                    // Clear the form and catalog after adding to cart
+                    if (button.id === 'addToCart') {
+                        document.querySelectorAll('#catalog input[type="checkbox"]').forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+                        document.getElementById('orderForm').reset();
+                        document.getElementById('custom-measurements').style.display = 'none';
+                        updateTotalPrice(); // Ensure total price is reset
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
