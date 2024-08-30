@@ -1,57 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/index.css">
-    <script src="https://kit.fontawesome.com/d4fcaf7a03.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="https://kit.fontawesome.com/d4fcaf7a03.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
-    <div class="login-main">
-        <div class="box-form">
-            <div class="left">
-                <div class="overlay">
-                    <h1>FitFusion</h1>
-                    <p>Seamlessly blending style and comfort - Offering a curated collection of clothing designed for
-                        those who
-                        prioritize both looking good.</p>
-                    <p> Expect to find trendy yet functional pieces that cater to an active lifestyle.</p>
-                    <span>
-                        <p>Or login via</p>
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href=""><i class="fa-brands fa-google"></i></a>
-                        <a href=""><i class="fa-brands fa-instagram"></i></a>
-                    </span>
-                </div>
-            </div>
-            <div class="right">
-                <h5>Login</h5>
-                <p>Don't have an account? <a href="/cohost3/fitfusion/signup.html">Sign up</a> in less than a minute.</p>
-                <div class="inputs">
-                    <input type="email" placeholder="Email">
-                    <br>
-                    <input type="password" placeholder="password">
-                </div>
+  <script>
+    const user = {
+      email: "johnniekay85@gmail.com",
+      password: "12345qwerty"
+    }
 
-                <br><br>
-
-                <div class="remember-me--forget-password">
-                    <label>
-                        <input type="checkbox" name="item" checked />
-                        <span class="text-checkbox">Remember me</span>
-                    </label>
-                    <p>forget password?</p>
-                </div>
-
-                <br>
-                <button class="login-btn">Login</button>
-            </div>
-        </div>
+    console.log(user);
+  </script>
+  <div class="box-form">
+    <div class="left">
+      <div class="overlay">
+      <h1>FitFusion</h1>
+      <p>Seamlessly blending style and comfort - Offering a curated collection of clothing designed for those who prioritize both looking good.</p>
+      <p> Expect to find trendy yet functional pieces that cater to an active lifestyle.</p>
+      <span>
+        <p>Or login via</p>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href=""><i class="fa-brands fa-google"></i></a>
+        <a href=""><i class="fa-brands fa-instagram"></i></a>
+      </span>
+      </div>
     </div>
+    <div class="right">
+      <h5>Login</h5>
+      <p>Don't have an account? <a href="#">Sign up</a> in less than a minute.</p>
+      <div class="inputs">
+        <input id="email" type="email" placeholder="Email">
+        <br>
+        <input id="password" type="password" placeholder="password">
+      </div>
+        
+        <br><br>
+        
+      <div class="remember-me--forget-password">
+    <label>
+      <input type="checkbox" name="item" checked/>
+      <span class="text-checkbox">Remember me</span>
+    </label>
+        <p>forget password?</p>
+      </div>
+        
+        <br>
+        <button>Login</button>
+    </div>
+    </div>
+    
 </body>
-
 </html>
