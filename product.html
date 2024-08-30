@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+    
+    <div class="main">
+        <div class="header">
+            <div class="menu">
+                <div class="left-menu">
+                    <a href="index.html" class="menu-item">Home</a>
+                    <a class="menu-item">About Us</a>
+                    <a href="product.html" class="menu-item">Products</a>
+                    <a class="menu-item">Contact Us</a>
+                </div>
+                <div class="brand">
+                    <img class="logo" src="assets/fitfusion_logo.jpeg" alt="logo">
+                    <span>FitFusion</span>
+                </div>
+                <div class="right-menu">
+                    <a href="login.html" class="menu-item login">Login</a>
+                    <a href="signup.html" class="menu-item best-seller">Create an account</a>
+                </div>
+            </div>
+        </div>
+        <div>
+        <div class="product-detail">
+            <div class="product-info">
+
+                <div class="catalog-section">
+            
+                <h2>------------------------------------</h2>
+                <p class="vendor-id">Vendor ID: 3874FF</p>
+                <div id="catalog" class="catalog">
+                        <div class="catalog-item" aria-required="true">
+                            <input type="checkbox" id="design1" name="selectedItems[]" value="Design 1" hidden data-price="15">
+                            <label for="design1">
+                                <img src="assets/1-catalog.jpeg" alt="Design 1">
+                                <p>Danshiki</p>
+                            </label>
+                        </div>
+                        <div class="catalog-item">
+                            <input type="checkbox" id="design2" name="selectedItems[]" value="Design 2" hidden data-price="25">
+                            <label for="design2">
+                                <img src="assets/2-catalog.jpeg" alt="Design 2">
+                                <p>Quater-hand Senator</p>
+                            </label>
+                        </div>
+                        <div class="catalog-item">
+                            <input type="checkbox" id="design3" name="selectedItems[]" value="Design 3" hidden data-price="10">
+                            <label for="design3">
+                                <img src="assets/3-catalog.jpeg" alt="Design 3">
+                                <p>Classic Vintage</p>
+                            </label>
+                        </div>
+                        <div class="catalog-item">
+                            <input type="checkbox" id="design4" name="selectedItems[]" value="Design 4" hidden data-price="20">
+                            <label for="design4">
+                                <img src="assets/4catalog.jpeg" alt="Design 4">
+                                <p>Plane & Pattern</p>
+                            </label>
+                        </div>
+                    <div class="catalog-item">
+                            <input type="checkbox" id="design5" name="selectedItems[]" value="Design 5" hidden data-price="18">
+                            <label for="design5">
+                                <img src="assets/10-catalog.jpeg" alt="Design 5">
+                                <p>Vintage</p>
+                            </label>
+                        </div>
+                        <div class="catalog-item">
+                            <input type="checkbox" id="design6" name="selectedItems[]" value="Design 6" hidden data-price="20">
+                            <label for="design6">
+                                <img src="assets/6-catalog.jpeg" alt="Design 6">
+                                <p>Classic</p>
+                            </label>
+                        </div>
+                        <div class="catalog-item">
+                            <input type="checkbox" id="design7" name="selectedItems[]" value="Design 7" hidden data-price="27">
+                            <label for="design7">
+                                <img src="assets/7-catalog.jpeg" alt="Design 7">
+                                <p>Classic short-sleeve</p>
+                            </label>
+                        </div>
+                        <div class="catalog-item">
+                            <input type="checkbox" id="design8" name="selectedItems[]" value="Design 8" hidden data-price="35">
+                            <label for="design8">
+                                <img src="assets/8-catalog.jpeg" alt="Design 8">
+                                <p>Agbada</p>
+                            </label>
+                        </div>
+                        <div class="catalog-item">
+                            <input type="checkbox" id="design9" name="selectedItems[]" value="Design 9" hidden data-price="25">
+                            <label for="design9">
+                                <img src="assets/9-catalog.jpeg" alt="Design 9">
+                                <p>Plus sized men<br>Vintage</p>
+                            </label>
+                        </div>
+                    
+                </div>
+                <form id="orderForm" action="" method="POST">
+
+                    <label for="weight">Weight:</label>
+                    <select id="weight" name="weight" required>
+                        <option value="" disabled selected>Select weight</option>
+                        <option value="S">75-85kg</option>
+                        <option value="M">85-95kg</option>
+                        <option value="L">95-100</option>
+                        <option value="XL">105 ===></option>
+                    </select>
+
+                    <label for="size">Size:</label>
+                    <select id="size" name="size" required>
+                        <option value="" disabled selected>Select size</option>
+                        <option value="S">Small</option>
+                        <option value="M">Medium</option>
+                        <option value="L">Large</option>
+                        <option value="XL">Extra Large</option>
+                    </select>
+
+                    <label for="measurements">Tailored Measurements:</label>
+                        <select id="measurements" name="measurements">
+                        <option value="" disabled selected>Select if applicable</option>
+                        <option value="custom">Custom Measurements</option>
+                        <option value="none">No Tailoring Needed</option>
+                    </select>
+
+                    <div id="custom-measurements" style="display:none;">
+
+                        <h4>Shirt Measurements</h4>
+
+                        <label for="shoulder">Shoulder (in cm):</label>
+                        <input type="number" id="shoulder" name="shoulder" min="0">
+                        <label for="chest">Chest (in cm):</label>
+                        <input type="number" id="chest" name="chest" min="0">
+                        <br>
+                        <label for="sleeve-length">Sleeve Length (in cm):</label>
+                        <input type="number" id="sleeve-length" name="sleeve-length" min="0">
+                        <label for="sleeve-width">Sleeve width (in cm):</label>
+                        <input type="number" id="sleeve-width" name="sleeve-width" min="0">
+                        <br>
+                        <label for="neck">Neck (in cm):</label>
+                        <input type="number" id="neck" name="neck" min="0">
+                        <label for="top-length"> Top Length (in cm):</label>
+                        <input type="number" id="top-length" name="top-length" min="0">
+                        <br>
+                        <h4>Trouser Measurements</h4>
+                        <label for="waist">Waist (in cm):</label>
+                        <input type="number" id="waist" name="waist" min="0">
+                        <label for="lap">Lap (in cm):</label>
+                        <input type="number" id="lap" name="lap" min="0">
+                        <br>
+                        <label for="flap"> Flap (in cm):</label>
+                        <input type="number" id="flap" name="flap" min="0">
+                        <label for="half-knee">Half-Knee Length (in cm):</label>
+                        <input type="number" id="half-knee" name="half-knee" min="0">
+                        <br>        
+                        <label for="helm-width">Helm width (in cm):</label>
+                        <input type="number" id="helm-width" name="helm-width" min="0">
+                        <label for="trouser-lenght">Trouser Length (in cm):</label>
+                        <input type="number" id="trouser-lenght" name="trouser-lenght" min="0">
+                    </div>
+
+                        <div class="price-section">
+                            <p>Total Price: $<span id="totalPrice">0</span></p>
+                        </div>
+
+                    <button type="button" class="cart-btn" id="addToCart">Add to Cart</button>
+                    <button type="button" class="cart-btn" id="removeFromCart">Remove from Cart</button>
+                    <br><br>
+                    <a href="cart.html">View cart</a>
+                </form>
+                </div>
+                <br><br>
+
+                <footer>
+                    <div class="footer-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                    <a href="contact.html">Contact Us</a>
+                    </div>
+                <p>&copy; 2024 FitFusion. All Rights Reserved.</p>
+                </footer>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display custom measurement fields when 'custom' is selected
+            document.getElementById('measurements').addEventListener('change', function() {
+                const customMeasurements = document.getElementById('custom-measurements');
+                customMeasurements.style.display = this.value === 'custom' ? 'block' : 'none';
+            });
+
+            // Update total price based on selected checkboxes
+            function updateTotalPrice() {
+                const totalPriceElement = document.getElementById('totalPrice');
+                const checkboxes = document.querySelectorAll('.catalog-item input[type="checkbox"]');
+                let totalPrice = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        totalPrice += parseFloat(checkbox.dataset.price);
+                    }
+                });
+                totalPriceElement.textContent = totalPrice.toFixed(2);
+            }
+
+            // Attach event listeners to checkboxes
+            document.querySelectorAll('.catalog-item input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateTotalPrice);
+            });
+
+            // Product class for handling product details
+            class Product {
+                constructor(vendorId, products, weight, size, measurement, price) {
+                    this.vendorId = vendorId;
+                    this.products = products;
+                    this.weight = weight;
+                    this.size = size;
+                    this.measurement = measurement;
+                    this.price = price;
+                }
+
+                create() {
+                    console.log(`Product created: Vendor ID: ${this.vendorId}, Products: ${this.products.join(', ')}, Weight: ${this.weight}, Size: ${this.size}, Measurement: ${this.measurement}, Price: $${this.price}`);
+                }
+
+                update(updatedProduct) {
+                    Object.assign(this, updatedProduct);
+                    console.log(`Product updated: Vendor ID: ${this.vendorId}, Products: ${this.products.join(', ')}, Weight: ${this.weight}, Size: ${this.size}, Measurement: ${this.measurement}, Price: $${this.price}`);
+                }
+
+                logAction(action) {
+                    console.log(`${action} action performed on product: Vendor ID: ${this.vendorId}, Products: ${this.products.join(', ')}, Weight: ${this.weight}, Size: ${this.size}, Measurement: ${this.measurement}, Price: $${this.price}`);
+                }
+            }
+
+            // Retrieve current product details
+            function getCurrentProductDetails() {
+                const vendorId = "3874FF";
+                const products = Array.from(document.querySelectorAll('.catalog-item input[type="checkbox"]:checked'))
+                                        .map(checkbox => checkbox.nextElementSibling.textContent.trim());
+                const weight = document.querySelector('#weight').value;
+                const size = document.querySelector('#size').value;
+                const measurement = document.querySelector('#measurements').value;
+                const price = parseFloat(document.getElementById('totalPrice').textContent);
+
+                return { vendorId, products, weight, size, measurement, price };
+            }
+
+            // Initial product instance
+            let product = new Product("3874FF", [], "", "", "", 0);
+            product.create();
+
+            // Update product details when buttons are clicked
+            document.querySelectorAll('.cart-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    const currentDetails = getCurrentProductDetails();
+                    product.update(currentDetails);
+
+                    const action = button.id === 'addToCart' ? 'Add to Cart' : 'Remove from Cart';
+                    product.logAction(action);
+
+                    if (button.id === 'addToCart') {
+                        const cartItems = Array.from(document.querySelectorAll('.catalog-item input[type="checkbox"]:checked')).map(checkbox => {
+                            return {
+                                name: checkbox.nextElementSibling.textContent.trim(),
+                                design: checkbox.value,
+                                price: parseFloat(checkbox.dataset.price),
+                                weight: currentDetails.weight,
+                                size: currentDetails.size,
+                                timestamp: new Date().toLocaleString()
+                            };
+                        });
+
+                        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                        cartItems.forEach(item => cart.push(item));
+                        localStorage.setItem('cart', JSON.stringify(cart));
+
+                        alert('Item(s) added to cart!');
+                    } else {
+                        console.log('Removed from Cart');
+                    }
+
+                    // Clear the form and catalog after adding to cart
+                    if (button.id === 'addToCart') {
+                        document.querySelectorAll('#catalog input[type="checkbox"]').forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+                        document.getElementById('orderForm').reset();
+                        document.getElementById('custom-measurements').style.display = 'none';
+                        updateTotalPrice(); // Ensure total price is reset
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

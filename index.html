@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fit Fusion</title>
     <link rel="stylesheet" href="css/index.css">
-
 </head>
 
 <body>
@@ -16,7 +15,7 @@
                 <div class="left-menu">
                     <a class="menu-item">Home</a>
                     <a class="menu-item">About Us</a>
-                    <a class="menu-item">Products</a>
+                    <a href="product.html" class="menu-item">Products</a>
                     <a class="menu-item">Contact Us</a>
                 </div>
                 <div class="brand">
@@ -24,8 +23,8 @@
                     <span>FitFusion</span>
                 </div>
                 <div class="right-menu">
-                    <a class="menu-item login" href="/cohost3/fitfusion/login.html">Login</a>
-                    <a class="menu-item best-seller" href="/cohost3/fitfusion/signup.html">Create An Account</a>
+                    <a href="login.html" class="menu-item login">Login</a>
+                    <a href="signup.html" class="menu-item best-seller">Create an account</a>
                 </div>
             </div>
             <div class="info">
@@ -48,46 +47,30 @@
             </div>
         </div>
         <div class="content">
-            <div class="fcontent">
-                <span class="line"></span>
-                <span class="line2"></span>
-                <span class="fcontspan">featured work</span>
-            </div>
-            <div class="ncontent">
-                <span class="span">see more product</span>
-            </div>
-
-            <div class="content3">
+            <h2>Fashion redefined to your specs</h2>
+            <hr>
+            <section id="boxes">
                 <div>
-                    <span class="info-1">let's create <br> your own style</span>
+                    <div class="box">
+                        <a><h3>Fashion</h3></a>
+                    </div>
+                    <div class="box">
+                        <a><h3>Style</h3></a>
+                    </div>
+                    <div class="box">
+                        <a><h3>Drip</h3></a>
+                    </div>
+                    <div class="box">
+                        <a><h3>Steeze</h3></a>
+                    </div>
+                    <div class="box">
+                        <a><h3>Membership</h3></a>
+                        <p>In essence drip is what you wear while steeze is how it fits.</p>
+                    </div>
                 </div>
-                <div>
-                    <span class="info-2">we do not divide our collections to seasons <br> <br> we create new models
-                        every and we make them <br><br> in a
-                        few items to preserve their uniqueness</span>
-                </div>
-            </div>
-
-            <div class="content4">
-                <img src="/cohost3/fitfusion/assets/photo-1532074662130-17f5486532b0.avif" alt="" class="img1">
-                <img src="/cohost3/fitfusion/assets/photo-1618886614638-80e3c103d31a.avif" alt="" class="img2">
-                <img src="/cohost3/fitfusion/assets/premium_photo-1658506787944-7939ed84aaf8.avif" alt="" class="img3">
-                <img src="/cohost3/fitfusion/assets/premium_photo-1669850858863-6fe7bf233483.avif" alt="" class="img4">
-            </div>
+            </section>
         </div>
     </div>
-    <script>
-        (() => console.log('nameless function'))();
-        const joinBtn = document.getElementById('join-btn');
-        console.log('joinbtn: ', joinBtn)
-        const handleJoinBtn = (evt) => {
-            console.log('Event: ', evt)
-        }
-        joinBtn.addEventListener('click', handleJoinBtn)
-
-
-
-    </script>
 </body>
-
-</html>
+ 
+</html> 

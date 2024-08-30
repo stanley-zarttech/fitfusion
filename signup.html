@@ -1,192 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEMI SIGN UP</title>
-    <style>
-        /* Your existing styles here */
-        #container {
-            height: auto;
-            width: 35%;
-            margin: auto;
-            background-color: gainsboro;
-            padding: 10px 20px;
-            box-sizing: border-box;
-            color: black;
-        }
-
-        h2 {
-            text-align: center;
-            padding-top: 0px;
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-
-        .center-content {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        label {
-            display: inline-block;
-            margin-bottom: 5px;
-            font-size: 1.2em;
-        }
-
-        input {
-            display: inline-block;
-            padding: 5px;
-            font-size: 1em;
-            width: 80%;
-            height: 35px;
-            border-radius: 50px;
-            margin: 0 auto;
-        }
-
-        .links {
-            display: flex;
-            justify-content: center;
-            gap: 70px;
-            margin-top: 10px;
-            font-size: large;
-        }
-
-        .links a {
-            text-decoration: none;
-        }
-
-        .privacy {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-            margin-right: 0;
-        }
-
-        #radio {
-            width: 20px;
-            margin-right: 10px;
-        }
-
-        .btn-sign-up {
-            display: block;
-            margin: 20px auto 0 auto;
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn-cancel {
-            display: block;
-            margin: 20px auto 0 auto;
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: #f02435;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            #container {
-                width: 90%;
-                padding: 10px;
-            }
-
-            input {
-                width: 90%;
-            }
-
-            .links {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .privacy {
-                margin-right: 0;
-            }
-
-            .sign-in-btn {
-                width: 90%;
-            }
-        }
-
-        .btn {
-            display: flex;
-            gap: 90px;
-        }
-
-        h2 {
-            margin-bottom: 30px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="https://kit.fontawesome.com/d4fcaf7a03.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
-    <div id="container">
-        <h2>SIGN UP</h2>
-        <div class="center-content">
-            <label for="fname">First name</label>
-            <br>
-            <input type="text" id="fname">
-            <br><br>
-            <label for="lname">Last name</label>
-            <br>
-            <input type="text" id="lname">
-            <br><br>
-            <label for="gsm">Phone number</label>
-            <br>
-            <input type="number" id="gsm">
-            <br><br>
-            <label for="email">Email</label>
-            <br>
-            <input type="email" id="email">
-            <br><br>
-            <label for="password">Password</label>
-            <br>
-            <input type="password" id="password">
-        </div>
-        <div class="links">
-            <p><a href="/cohost3/fitfusion/login.html">Sign in</a></p>
-            <p><a href="#">Forgot password</a></p>
-        </div>
-        <div class="privacy">
-            <input type="checkbox" id="radio" name="privacy">
-            <p>Accept privacy terms and conditions</p>
-        </div>
-        <div class="btn">
-            <button class="btn-cancel">Cancel</button>
-            <button class="btn-sign-up" id="signup-btn">Sign up</button>
-        </div>
+  <script>
+    function signup() {
+    const uname = document.getElementById('username').value;
+    const fname = document.getElementById('firstName').value;
+    const lname = document.getElementById('lastName').value;
+    const pnumber = document.getElementById('phone').value;
+    const home = document.getElementById('address').value;
+    const emailInput = document.getElementById('email').value;
+    const passwordInput = document.getElementById('password').value;
+
+    const user = {
+        uname,
+        fname,
+        lname,
+        pnumber,
+        home,
+        emailInput,
+        passwordInput
+    };
+
+    console.log('user datails:', user);
+    document.getElementById('signup').reset();
+}
+
+  </script>
+  <div class="box-form">
+    <div class="left">
+      <div class="overlay">
+      <h1>FitFusion</h1>
+      <p>Seamlessly blending style and comfort - Offering a curated collection of clothing designed for those who prioritize both looking good.</p>
+      <p> Expect to find trendy yet functional pieces that cater to an active lifestyle.</p>
+      <span>
+        <p>Or signup via</p>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href=""><i class="fa-brands fa-google"></i></a>
+        <a href=""><i class="fa-brands fa-instagram"></i></a>
+      </span>
+      </div>
     </div>
+    <div class="right">
+      <h5>Create an account</h5>
+      <p></p>
+      <div class="inputs">
+        <form id="signup">
+          <input id="username" type="text" autocomplete="off" placeholder="Username:">
+          <br><br>
+          <input id="firstName" type="text" autocomplete="off" placeholder="First Name:">
+          <input id="lastName" type="text" autocomplete="off" placeholder="Last Name:">
+          <br><br>
+          <input id="phone" type="number" autocomplete="off" placeholder="Phone Numer(+234):">
+          <input id="address" type="text" autocomplete="off" placeholder="Address:">
+          <br><br>
+          <input id="email" type="email" autocomplete="off" placeholder="Email:">
+          <input id="password" type="password" autocomplete="off" placeholder="Password:">
+        </form>
+        <div>
+          <button type="button" onclick="signup()">Sign Up</button>
+        </div>
+      </div>
 
-    <script>
-        document.getElementById("signup-btn").addEventListener("click", function() {
-            // Get the input values
-            const firstName = document.getElementById("fname").value;
-            const lastName = document.getElementById("lname").value;
-            const phoneNumber = document.getElementById("gsm").value;
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            const privacyAccepted = document.getElementById("radio").checked;
-
-            // Log all the values in one console log statement
-            console.log({
-                "First Name": firstName,
-                "Last Name": lastName,
-                "Phone Number": phoneNumber,
-                "Email": email,
-                "Password": password,
-                "Privacy Accepted": privacyAccepted
-            });
-        });
-    </script>
 </body>
-
 </html>

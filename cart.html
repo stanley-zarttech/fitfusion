@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <div class="menu">
+                <div class="left-menu">
+                    <a href="index.html" class="menu-item">Home</a>
+                    <a class="menu-item">About Us</a>
+                    <a href="product.html" class="menu-item">Products</a>
+                    <a class="menu-item">Contact Us</a>
+                </div>
+                <div class="brand">
+                    <img class="logo" src="assets/fitfusion_logo.jpeg" alt="logo">
+                    <span>FitFusion</span>
+                </div>
+                <div class="right-menu">
+                    <a href="login.html" class="menu-item login">Login</a>
+                    <a href="signup.html" class="menu-item best-seller">Create an account</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="order-detail">
+            <div class="order-info">
+                <h2>Your Cart</h2>
+                <hr>
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be added dynamically -->
+                </div>
+
+                <div class="cart-summary">
+                    <p>Subtotal: $<span id="subtotal">0</span></p>
+                    <p>Tax: $<span id="tax">0</span></p>
+                    <p>Shipping: $<span id="shipping">10</span></p>
+                    <p>Total: $<span id="totalPrice">0</span></p>
+                    <button id="cancelOrder">Cancel Order</button>
+                    <button id="checkoutButton">Checkout</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p>&copy; 2024 FitFusion. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            cartItemsContainer.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                
+                itemElement.innerHTML = `
+                    <div class="item-details">
+                        <h2>${item.name}</h2>
+                        <p>Price: $${item.price.toFixed(2)}</p>
+                        <p>Design: ${item.design}</p>
+                        <p>Weight: ${item.weight}</p>
+                        <p>Size: ${item.size}</p>
+                        <p>Added on: ${item.timestamp}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="remove-button" data-index="${index}">Remove</button>
+                    </div>
+                `;
+
+                itemElement.querySelector('.remove-button').addEventListener('click', (e) => {
+                    removeItemFromCart(parseInt(e.target.getAttribute('data-index')));
+                });
+
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            updateTotalPrice();
+        }
+
+        function removeItemFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCartItems();
+        }
+
+        function updateTotalPrice() {
+            const subtotalElement = document.getElementById('subtotal');
+            const taxElement = document.getElementById('tax');
+            const totalElement = document.getElementById('totalPrice');
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            const tax = subtotal * 0.10;
+            const shipping = 10.00;
+            const total = subtotal + tax + shipping;
+
+            subtotalElement.textContent = subtotal.toFixed(2);
+            taxElement.textContent = tax.toFixed(2);
+            totalElement.textContent = total.toFixed(2);
+        }
+
+        document.getElementById('cancelOrder').addEventListener('click', () => {
+            localStorage.removeItem('cart');
+            renderCartItems();
+        });
+
+        document.getElementById('checkoutButton').addEventListener('click', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length > 0) {
+                alert('Checkout successful. Items: \n' + cart.map(item => `${item.name} @ $${item.price.toFixed(2)} (Added on: ${item.timestamp})`).join('\n'));
+            } else {
+                alert('Your cart is empty.');
+            }
+        });
+
+        renderCartItems();
+    </script>
+</body>
+</html>
