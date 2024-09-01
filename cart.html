@@ -58,84 +58,65 @@
 
     <script>        
         class Order {
-        constructor(orderItems = [], totalPrice = 0, timestamp = new Date().toISOString()) {
-            this.orderItems = orderItems;
-            this.totalPrice = totalPrice;
-            this.timestamp = timestamp;
+    constructor(orderItems = [], totalPrice = 0, timestamp = new Date().toISOString()) {
+        this.orderItems = orderItems;
+        this.totalPrice = totalPrice;
+        this.timestamp = timestamp;
     }
 
     addItem(item, price, details) {
         this.orderItems.push({ item, price, ...details });
-        this.logAddition(item, price, details);
+        this.logItem('Add', item, price, details);
     }
 
     removeItem(item, details) {
-        const index = this.orderItems.findIndex(orderItem => orderItem.item === item && this.matchDetails(orderItem, details));
+        const index = this.orderItems.findIndex(orderItem => 
+            orderItem.item === item && Object.keys(details).every(key => orderItem[key] === details[key])
+        );
         if (index !== -1) {
             const removedItem = this.orderItems.splice(index, 1)[0];
-            this.logRemoval(removedItem);
+            this.logItem('Remove', removedItem.item, removedItem.price, removedItem);
         } else {
             console.log(`Item "${item}" not found in the cart.`);
         }
     }
 
-    matchDetails(orderItem, details) {
-        return Object.keys(details).every(key => orderItem[key] === details[key]);
-    }
-
     calculateTotalPrice() {
-        const subtotal = this.orderItems.reduce((sum, orderItem) => sum + orderItem.price, 0);
+        const subtotal = this.orderItems.reduce((sum, { price }) => sum + price, 0);
         const tax = subtotal * 0.10;
-        const shipping = this.orderItems.length > 0 ? 10.00 : 0.00; // Apply shipping only if there are items in the cart
-        this.totalPrice = subtotal + tax + shipping;
-        return this.totalPrice;
+        const shipping = this.orderItems.length > 0 ? 10.00 : 0.00;
+        return this.totalPrice = subtotal + tax + shipping;
     }
 
-    checkout() {
-        console.log(`Order checked out:`);
-        this.logOrderDetails();
-    }
-
-    cancel() {
-        console.log(`Order canceled:`);
-        this.logOrderDetails();
-    }
-
-    logAddition(item, price, details) {
-        console.log(`Add Item: ${item} ($${price.toFixed(2)})`);
+    logItem(action, item, price, details) {
+        console.log(`${action} Item: ${item} ($${price.toFixed(2)})`);
         console.log(`Details - Size: ${details.size}, Weight: ${details.weight}, Timestamp: ${details.timestamp}`);
     }
 
-    logRemoval(removedItem) {
-        console.log(`Remove Item: ${removedItem.item} ($${removedItem.price.toFixed(2)})`);
-        console.log(`Details - Size: ${removedItem.size}, Weight: ${removedItem.weight}, Timestamp: ${removedItem.timestamp}`);
-    }
-
     logTotalPrice() {
-        const totalPrice = this.calculateTotalPrice();
-        console.log(`Total Price: $${totalPrice.toFixed(2)}`);
+        console.log(`Total Price: $${this.calculateTotalPrice().toFixed(2)}`);
     }
 
     logOrderDetails() {
-        console.log(`Order Items: ${this.orderItems.map(orderItem => `${orderItem.item} ($${orderItem.price})`).join(', ')}`);
+        console.log(`Order Items: ${this.orderItems.map(({ item, price }) => `${item} ($${price})`).join(', ')}`);
         this.logTotalPrice();
         console.log(`Timestamp: ${this.timestamp}`);
     }
+
+    checkout() { this.logOrderDetails('checked out'); }
+    cancel() { this.logOrderDetails('canceled'); }
 }
 
-// Create an instance of the Order class
 const order = new Order();
 
 function renderCartItems() {
     const cartItemsContainer = document.getElementById('cartItems');
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
     cartItemsContainer.innerHTML = '';
 
     cart.forEach((item, index) => {
         const itemElement = document.createElement('div');
         itemElement.classList.add('cart-item');
-        
         itemElement.innerHTML = `
             <div class="item-details">
                 <h2>${item.name}</h2>
@@ -149,13 +130,9 @@ function renderCartItems() {
                 <button class="remove-button" data-index="${index}">Remove</button>
             </div>
         `;
-
         order.addItem(item.name, item.price, { size: item.size, weight: item.weight, timestamp: item.timestamp });
 
-        itemElement.querySelector('.remove-button').addEventListener('click', (e) => {
-            removeItemFromCart(parseInt(e.target.getAttribute('data-index')));
-        });
-
+        itemElement.querySelector('.remove-button').addEventListener('click', () => removeItemFromCart(index));
         cartItemsContainer.appendChild(itemElement);
     });
 
@@ -164,30 +141,24 @@ function renderCartItems() {
 }
 
 function removeItemFromCart(index) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const item = cart[index];
-
     order.removeItem(item.name, { size: item.size, weight: item.weight, timestamp: item.timestamp });
-
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCartItems();
 }
 
 function updateTotalPrice() {
-    const subtotalElement = document.getElementById('subtotal');
-    const taxElement = document.getElementById('tax');
-    const totalElement = document.getElementById('totalPrice');
-
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
     const tax = subtotal * 0.10;
     const shipping = cart.length > 0 ? 10.00 : 0.00;
     const total = subtotal + tax + shipping;
 
-    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-    taxElement.textContent = `$${tax.toFixed(2)}`;
-    totalElement.textContent = `$${total.toFixed(2)}`;
+    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+    document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
 
     // Update Order instance with calculated total
     order.totalPrice = total;
@@ -202,7 +173,7 @@ document.getElementById('cancelOrder').addEventListener('click', () => {
 document.getElementById('checkoutButton').addEventListener('click', () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart.length > 0) {
-        alert('Checkout successful. Items: \n' + cart.map(item => `${item.name} @ $${item.price.toFixed(2)} (Added on: ${item.timestamp})`).join('\n'));
+        alert('Checkout successful. Items:\n' + cart.map(item => `${item.name} @ $${item.price.toFixed(2)} (Added on: ${item.timestamp})`).join('\n'));
         order.checkout();
     } else {
         alert('Your cart is empty.');
@@ -210,6 +181,7 @@ document.getElementById('checkoutButton').addEventListener('click', () => {
 });
 
 renderCartItems();
+
     </script>
 </body>
 </html>
