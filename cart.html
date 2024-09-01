@@ -189,7 +189,7 @@ function updateTotalPrice() {
     taxElement.textContent = `$${tax.toFixed(2)}`;
     totalElement.textContent = `$${total.toFixed(2)}`;
 
-    // Update Order instance with the calculated total
+    // Update Order instance with calculated total
     order.totalPrice = total;
 }
 
