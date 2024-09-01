@@ -56,79 +56,160 @@
         </footer>
     </div>
 
-    <script>
-        function renderCartItems() {
-            const cartItemsContainer = document.getElementById('cartItems');
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    <script>        
+        class Order {
+        constructor(orderItems = [], totalPrice = 0, timestamp = new Date().toISOString()) {
+            this.orderItems = orderItems;
+            this.totalPrice = totalPrice;
+            this.timestamp = timestamp;
+    }
 
-            cartItemsContainer.innerHTML = '';
+    addItem(item, price, details) {
+        this.orderItems.push({ item, price, ...details });
+        this.logAddition(item, price, details);
+    }
 
-            cart.forEach((item, index) => {
-                const itemElement = document.createElement('div');
-                itemElement.classList.add('cart-item');
-                
-                itemElement.innerHTML = `
-                    <div class="item-details">
-                        <h2>${item.name}</h2>
-                        <p>Price: $${item.price.toFixed(2)}</p>
-                        <p>Design: ${item.design}</p>
-                        <p>Weight: ${item.weight}</p>
-                        <p>Size: ${item.size}</p>
-                        <p>Added on: ${item.timestamp}</p>
-                    </div>
-                    <div class="item-actions">
-                        <button class="remove-button" data-index="${index}">Remove</button>
-                    </div>
-                `;
-
-                itemElement.querySelector('.remove-button').addEventListener('click', (e) => {
-                    removeItemFromCart(parseInt(e.target.getAttribute('data-index')));
-                });
-
-                cartItemsContainer.appendChild(itemElement);
-            });
-
-            updateTotalPrice();
+    removeItem(item, details) {
+        const index = this.orderItems.findIndex(orderItem => orderItem.item === item && this.matchDetails(orderItem, details));
+        if (index !== -1) {
+            const removedItem = this.orderItems.splice(index, 1)[0];
+            this.logRemoval(removedItem);
+        } else {
+            console.log(`Item "${item}" not found in the cart.`);
         }
+    }
 
-        function removeItemFromCart(index) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCartItems();
-        }
+    matchDetails(orderItem, details) {
+        return Object.keys(details).every(key => orderItem[key] === details[key]);
+    }
 
-        function updateTotalPrice() {
-            const subtotalElement = document.getElementById('subtotal');
-            const taxElement = document.getElementById('tax');
-            const totalElement = document.getElementById('totalPrice');
+    calculateTotalPrice() {
+        const subtotal = this.orderItems.reduce((sum, orderItem) => sum + orderItem.price, 0);
+        const tax = subtotal * 0.10;
+        const shipping = this.orderItems.length > 0 ? 10.00 : 0.00; // Apply shipping only if there are items in the cart
+        this.totalPrice = subtotal + tax + shipping;
+        return this.totalPrice;
+    }
 
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
-            const tax = subtotal * 0.10;
-            const shipping = 10.00;
-            const total = subtotal + tax + shipping;
+    checkout() {
+        console.log(`Order checked out:`);
+        this.logOrderDetails();
+    }
 
-            subtotalElement.textContent = subtotal.toFixed(2);
-            taxElement.textContent = tax.toFixed(2);
-            totalElement.textContent = total.toFixed(2);
-        }
+    cancel() {
+        console.log(`Order canceled:`);
+        this.logOrderDetails();
+    }
 
-        document.getElementById('cancelOrder').addEventListener('click', () => {
-            localStorage.removeItem('cart');
-            renderCartItems();
+    logAddition(item, price, details) {
+        console.log(`Add Item: ${item} ($${price.toFixed(2)})`);
+        console.log(`Details - Size: ${details.size}, Weight: ${details.weight}, Timestamp: ${details.timestamp}`);
+    }
+
+    logRemoval(removedItem) {
+        console.log(`Remove Item: ${removedItem.item} ($${removedItem.price.toFixed(2)})`);
+        console.log(`Details - Size: ${removedItem.size}, Weight: ${removedItem.weight}, Timestamp: ${removedItem.timestamp}`);
+    }
+
+    logTotalPrice() {
+        const totalPrice = this.calculateTotalPrice();
+        console.log(`Total Price: $${totalPrice.toFixed(2)}`);
+    }
+
+    logOrderDetails() {
+        console.log(`Order Items: ${this.orderItems.map(orderItem => `${orderItem.item} ($${orderItem.price})`).join(', ')}`);
+        this.logTotalPrice();
+        console.log(`Timestamp: ${this.timestamp}`);
+    }
+}
+
+// Create an instance of the Order class
+const order = new Order();
+
+function renderCartItems() {
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    cartItemsContainer.innerHTML = '';
+
+    cart.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
+        
+        itemElement.innerHTML = `
+            <div class="item-details">
+                <h2>${item.name}</h2>
+                <p>Price: $${item.price.toFixed(2)}</p>
+                <p>Design: ${item.design}</p>
+                <p>Weight: ${item.weight}</p>
+                <p>Size: ${item.size}</p>
+                <p>Added on: ${item.timestamp}</p>
+            </div>
+            <div class="item-actions">
+                <button class="remove-button" data-index="${index}">Remove</button>
+            </div>
+        `;
+
+        order.addItem(item.name, item.price, { size: item.size, weight: item.weight, timestamp: item.timestamp });
+
+        itemElement.querySelector('.remove-button').addEventListener('click', (e) => {
+            removeItemFromCart(parseInt(e.target.getAttribute('data-index')));
         });
 
-        document.getElementById('checkoutButton').addEventListener('click', () => {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if (cart.length > 0) {
-                alert('Checkout successful. Items: \n' + cart.map(item => `${item.name} @ $${item.price.toFixed(2)} (Added on: ${item.timestamp})`).join('\n'));
-            } else {
-                alert('Your cart is empty.');
-            }
-        });
+        cartItemsContainer.appendChild(itemElement);
+    });
 
-        renderCartItems();
+    order.logTotalPrice();
+    updateTotalPrice();
+}
+
+function removeItemFromCart(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const item = cart[index];
+
+    order.removeItem(item.name, { size: item.size, weight: item.weight, timestamp: item.timestamp });
+
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCartItems();
+}
+
+function updateTotalPrice() {
+    const subtotalElement = document.getElementById('subtotal');
+    const taxElement = document.getElementById('tax');
+    const totalElement = document.getElementById('totalPrice');
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+    const tax = subtotal * 0.10;
+    const shipping = cart.length > 0 ? 10.00 : 0.00;
+    const total = subtotal + tax + shipping;
+
+    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+    taxElement.textContent = `$${tax.toFixed(2)}`;
+    totalElement.textContent = `$${total.toFixed(2)}`;
+
+    // Update Order instance with the calculated total
+    order.totalPrice = total;
+}
+
+document.getElementById('cancelOrder').addEventListener('click', () => {
+    localStorage.removeItem('cart');
+    order.cancel();
+    renderCartItems();
+});
+
+document.getElementById('checkoutButton').addEventListener('click', () => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length > 0) {
+        alert('Checkout successful. Items: \n' + cart.map(item => `${item.name} @ $${item.price.toFixed(2)} (Added on: ${item.timestamp})`).join('\n'));
+        order.checkout();
+    } else {
+        alert('Your cart is empty.');
+    }
+});
+
+renderCartItems();
     </script>
 </body>
 </html>
