@@ -4,8 +4,8 @@ const app = express();
 
 
 
-// app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json())
 
 app.get('/', function (req, res) {
     res.send('Hello World!')
@@ -23,8 +23,7 @@ const userRoutes = require('./routes/user.route');
 
 
 app.use('/users', userRoutes);
-// /users / signUp
-// /users/signin
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
