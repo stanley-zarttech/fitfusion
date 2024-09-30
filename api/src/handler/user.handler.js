@@ -1,4 +1,4 @@
-const { signUp } = require('../services/user.service');
+const { signUp, signIn } = require('../services/user.service');
 
 const signUpHandler = async (req, res) => {
     const { body } = req;
@@ -8,10 +8,13 @@ const signUpHandler = async (req, res) => {
 }
 
 const signInHandler = async (req, res) => {
+    const { body } = req;
 
+    const result = signIn(body)
+    res.json({ message: 'Signup is successful' })
 }
 
 module.exports = {
-    signUpHandler, signInHandler
-
+    signUpHandler,
+    signInHandler
 }
