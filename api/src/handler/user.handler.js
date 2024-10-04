@@ -23,14 +23,12 @@ const signInHandler = async (req, res) => {
         const result = await signIn(body);
 
         if (result) {
-            // If the user is found and authenticated, send a success message
             res.json({ message: 'Sign-in is successful', user: result });
         } else {
-            // If user is not found or authentication fails, send an error message
             res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
-        // Handle any errors that occur during sign-in
+        // Handle any error that occur during signing in
         res.status(500).json({ error: error.message });
     }
 }

@@ -10,11 +10,11 @@ const signUp = async (body) => {
             throw new Error('Email and password are required.');
         }
 
-        // Hash the password
+        // Hashing the password
         const saltRounds = 10;
         body.password = await bcrypt.hash(body.password, saltRounds);
 
-        // Generate a unique user ID
+        // Generating the user ID
         body.id = (Math.random() * 10).toString(32).replace('.', '');
         console.log('body ', body);
 
@@ -22,14 +22,12 @@ const signUp = async (body) => {
         console.log('exists: ', exists);
 
         if (exists) {
-            // Append to dbPath
             appendFileSync(dbPath, '\n' + JSON.stringify(body));
         } else {
-            // Create and write to dbPath
             writeFileSync(dbPath, JSON.stringify(body));
         }
 
-        return body; // Return the user object
+        return body;
     } catch (error) {
         console.log('Signup error: ', error.message);
     }
@@ -45,21 +43,20 @@ const signIn = async (body) => {
             throw new Error('Email and password are required.');
         }
 
-        // Read the database file content
+        // Reading the database file content
         const db = readFileSync(dbPath, 'UTF-8');
         const users = db.split('\n');
 
         console.log('Db Content: ', email);
         let foundUser = null;
 
-        // Iterate through all users to find the one that matches the given email
+        // Iterate through all users to find matching email
         for (const user of users) {
-            if (user.trim() === '') continue; // Skip empty lines
+            if (user.trim() === '') continue;
 
             const parsedUser = JSON.parse(user);
             console.log('found user email: ', parsedUser.email);
 
-            // Check if the email matches
             if (parsedUser.email === email) {
                 // Compare hashed password
                 const isPasswordValid = await bcrypt.compare(password, parsedUser.password);
@@ -73,13 +70,12 @@ const signIn = async (body) => {
             }
         }
 
-        return foundUser; // Return the matched user, or `null` if not found
+        return foundUser;
     } catch (error) {
         console.log('Error signing in: ', error.message);
     }
 };
 
-// Export the functions
 module.exports = {
     signUp,
     signIn
